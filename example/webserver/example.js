@@ -10,7 +10,7 @@ fs.readFile('./data/example1.json', (err, data) => {
   });
 });
 
-var easyAsync = require('../../index.js');
+var easyAsync = require('easyasync');
 
 var funcs = [
   (cb) => {
