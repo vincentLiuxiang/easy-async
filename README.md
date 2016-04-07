@@ -46,7 +46,7 @@ fs.readFile('./data/example1.json', (err, data) => {
 #### easyasync : series模式
 
 ```
-var easyAsync = require('../../index.js');
+var easyAsync = require('easyasync');
 var user  = null;
 var money = 0 ;
 
