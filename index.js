@@ -1,21 +1,21 @@
 var Async = function () {}
 
-var sync = function (funcs,cbData,callback) {
+var sync = function (funcs,cbData,predata,callback) {
   if(!funcs.length){
     return callback&&callback(null,cbData);
   }
-  funcs.shift()(function (err,data) {
+  funcs.shift()((err,data) => {
     callback&&cbData.push(data);
     if(err){
       return callback&&callback(err,cbData);
     }
-    sync(funcs,cbData,callback);
-  });
+    sync(funcs,cbData,data,callback);
+  },predata);
 }
 
 Async.prototype.series = function (funcs,callback) {
   var data = [];
-  sync(funcs,data,callback);
+  sync(funcs,data,null,callback);
 }
 
 Async.prototype.parallel = function (funcs,callback) {

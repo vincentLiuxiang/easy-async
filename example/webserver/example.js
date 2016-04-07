@@ -10,6 +10,7 @@ fs.readFile('./data/example1.json', (err, data) => {
   });
 });
 
+
 var easyAsync = require('../../index');
 
 var funcs = [
@@ -22,31 +23,28 @@ var funcs = [
     cb(null);
   }
 ]
+
 easyAsync.series(funcs);
 
-
-var user  = null;
-var money = 0 ;
 
 var funcs = [
   (cb) => {
     fs.readFile('./data/example1.json', (err, data) => {
       if(err) return cb(err);
-      user = JSON.parse(data).user;
       cb(null,JSON.parse(data).user);
     });
   },
-  (cb) => {
+  (cb,preData) => {
+    console.log(preData);
     fs.readFile('./data/example2.json', (err, data) => {
       if (err) return cb(err);
-      money = JSON.parse(data)[user];
-      cb(null,money);
+      cb(null,JSON.parse(data)[preData]);
     });
   }
 ]
 
 easyAsync.series(funcs,function (err,data) {
-  console.log(err,data,user,money);
+  console.log(err,data);
 });
 
 
