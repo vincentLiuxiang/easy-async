@@ -106,7 +106,7 @@ easyAsync.parallel(funcs,function (err,data) {
 
 ```
 
-#### easy-async 源码
+#### easyasync 源码
 
 ```
 var Async = function () {}
