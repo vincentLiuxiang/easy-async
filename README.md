@@ -79,7 +79,7 @@ easyAsync.series(funcs,function (err,data) {
 #### easyasync : parallel模式
 
 ```
-var easyAsync = require('../../index.js');
+var easyAsync = require('easyasync');
 var funcs = [
   (cb) => {
     fs.readFile('./data/example1.json', (err, data) => {
