@@ -11,14 +11,17 @@ npm install easyasync
 ```
 easyAsync = require('easyasync');
 
-easyAsync.series([func1(cb){
-  	  ...
-	},func2(cb){
-      ...
-    } 
-    ...
-   ]
-   [,callback]
+easyAsync.series(
+ [
+   func1(cb){
+     ...
+   },
+   func2(cb){
+     ...
+   } 
+   ...
+ ]
+ [,callback]
 )
 
 callback可选
@@ -71,7 +74,7 @@ easyAsync.series(funcs,function (err,data) {
 
 ```
 * cb(null,data) 调用funcs的下一个function
-* cb(err) 忽略funcs剩下function，进入 easyAsync.series(funcs,[,callback]) callback;
+* cb(err) 忽略funcs剩下function，进入 easyAsync.series(funcs [,callback]) callback;
 
 #### easyasync : parallel模式
 
