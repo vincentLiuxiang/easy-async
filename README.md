@@ -16,9 +16,12 @@ easyAsync.series(
    func1(cb){
      ...
    },
-   func2(cb){
+   func2(cb,predata){
      ...
-   } 
+   },
+   func3(cb,predata){
+     ...
+   }  
    ...
  ]
  [,callback]
@@ -54,15 +57,14 @@ var funcs = [
   (cb) => {
     fs.readFile('./data/example1.json', (err, data) => {
       if(err) return cb(err);
-      user = JSON.parse(data).user;
       cb(null,JSON.parse(data).user);
     });
   },
-  (cb) => {
+  (cb,preData) => {
+    console.log(preData);
     fs.readFile('./data/example2.json', (err, data) => {
       if (err) return cb(err);
-      money = JSON.parse(data)[user];
-      cb(null,money);
+      cb(null,JSON.parse(data)[preData]);
     });
   }
 ]
@@ -73,8 +75,10 @@ easyAsync.series(funcs,function (err,data) {
 });
 
 ```
-* cb(null,data) 调用funcs的下一个function
+
+* cb(null,data) 调用funcs的下一个function;
 * cb(err) 忽略funcs剩下function，进入 easyAsync.series(funcs [,callback]) callback;
+* (cb,preData) preData:上一个function cb(null,data)的data;
 
 #### easyasync : parallel模式
 
@@ -111,22 +115,22 @@ easyAsync.parallel(funcs,function (err,data) {
 ```
 var Async = function () {}
 
-var sync = function (funcs,cbData,callback) {
+var sync = function (funcs,cbData,predata,callback) {
   if(!funcs.length){
     return callback&&callback(null,cbData);
   }
-  funcs.shift()(function (err,data) {
+  funcs.shift()((err,data) => {
     callback&&cbData.push(data);
     if(err){
       return callback&&callback(err,cbData);
     }
-    sync(funcs,cbData,callback);
-  });
+    sync(funcs,cbData,data,callback);
+  },predata);
 }
 
 Async.prototype.series = function (funcs,callback) {
   var data = [];
-  sync(funcs,data,callback);
+  sync(funcs,data,null,callback);
 }
 
 Async.prototype.parallel = function (funcs,callback) {
