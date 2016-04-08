@@ -50,8 +50,6 @@ fs.readFile('./data/example1.json', (err, data) => {
 
 ```
 var easyAsync = require('easyasync');
-var user  = null;
-var money = 0 ;
 
 var funcs = [
   (cb) => {
@@ -71,7 +69,7 @@ var funcs = [
 
 easyAsync.series(funcs,function (err,data) {
   // 返回data数组，data按funcs函数顺序排序。
-  console.log(err,data,user,money);
+  console.log(err,data);
 });
 
 ```
