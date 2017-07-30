@@ -22,23 +22,21 @@ Async.prototype.parallel = function (funcs,callback) {
   var funcNum = funcs.length;
   var cbDataTmp = 0;
   var cbData = [];
-  for(var funcIndex in funcs){
+  for(let funcIndex in funcs){
     var Func = funcs[funcIndex];
-    (function (funcIndex) {
-      Func(function (err,data) {
-        if(callback){
-          if(err){
-            cbData[funcIndex] = data;
-            return callback(err,cbData);
-          }
-          cbDataTmp++;
+    Func(function (err,data) {
+      if(callback){
+        if(err){
           cbData[funcIndex] = data;
-          if(cbDataTmp === funcNum){
-            return callback(null,cbData);
-          }
+          return callback(err,cbData);
         }
-      })
-    })(funcIndex);
+        cbDataTmp++;
+        cbData[funcIndex] = data;
+        if(cbDataTmp === funcNum){
+          return callback(null,cbData);
+        }
+      }
+    })
   }
 }
 

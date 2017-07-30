@@ -1,6 +1,6 @@
 {
   "name": "easyasync",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "简单的控制异步方法，同步调用的模块",
   "main": "index.js",
   "scripts": {
