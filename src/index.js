@@ -24,7 +24,7 @@ Async.prototype.parallel = function (funcs,callback) {
   var cbData = [];
   for(let funcIndex in funcs){
     var Func = funcs[funcIndex];
-    Func(function (err,data) {
+    Func((err,data) => {
       if(callback){
         if(err){
           cbData[funcIndex] = data;
